@@ -1,0 +1,13 @@
+{
+  "name": "Dribbble top",
+  "description": "Get dribbble top shots",
+  "repository": "https://github.com/phil-r/dribbble-top",
+  "buildpacks": [
+    {
+      "url": "jontewks/puppeteer"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
