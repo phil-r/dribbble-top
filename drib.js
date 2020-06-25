@@ -31,6 +31,7 @@ module.exports = async function getTop() {
     const results = [];
     const $shots = document.querySelectorAll('.shot-thumbnail');
     for (let i = 0; i < $shots.length; i++) {
+      const id = parseInt($shots[i].dataset.screenshotId);
       const img = $shots[i].querySelector('picture source').srcset;
       const video = $shots[i].querySelector('.video')?.dataset.videoTeaserXlarge;
       const url = $shots[i].querySelector('.dribbble-link').href;
@@ -47,6 +48,7 @@ module.exports = async function getTop() {
       ).innerText;
       const authorURL = $shots[i].querySelector('.user-information .url').href;
       results.push({
+        id,
         img,
         video,
         url,
