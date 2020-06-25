@@ -1,0 +1,20 @@
+{
+  "name": "dribbble-top",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Phil Rukin <philipp@rukin.me> (https://rukin.me)",
+  "license": "MIT",
+  "dependencies": {
+    "@polka/send-type": "^0.5.2",
+    "polka": "^0.5.2",
+    "puppeteer": "^3.3.0",
+    "puppeteer-extra": "^3.1.9",
+    "puppeteer-extra-plugin-adblocker": "^2.11.3",
+    "puppeteer-extra-plugin-stealth": "^2.4.9"
+  }
+}
