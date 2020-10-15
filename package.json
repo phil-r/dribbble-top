@@ -16,7 +16,7 @@
     "@polka/send-type": "^0.5.2",
     "node-cache": "^5.1.2",
     "polka": "^0.5.2",
-    "puppeteer": "^3.3.0",
+    "puppeteer": "^5.3.1",
     "puppeteer-extra": "^3.1.15",
     "puppeteer-extra-plugin-adblocker": "^2.11.6",
     "puppeteer-extra-plugin-stealth": "^2.6.2"
