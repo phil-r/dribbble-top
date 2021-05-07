@@ -3,9 +3,11 @@
 // Any number of plugins can be added through `puppeteer.use()`
 const puppeteer = require('puppeteer-extra');
 
-// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
+// Add stealth plugin
+const pluginStealth = require('puppeteer-extra-plugin-stealth')();
+// Remove specific evasion from enabled ones dynamically due to https://github.com/berstend/puppeteer-extra/issues/467
+pluginStealth.enabledEvasions.delete('user-agent-override');
+puppeteer.use(pluginStealth);
 
 // Add adblocker plugin to block all ads and trackers (saves bandwidth)
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
