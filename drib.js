@@ -15,10 +15,7 @@ module.exports = async function getTop() {
   const browser = await puppeteer.launch({
     // headless: false,
     // devtools: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
   const page = await browser.newPage();
@@ -33,14 +30,20 @@ module.exports = async function getTop() {
     for (let i = 0; i < $shots.length; i++) {
       const id = parseInt($shots[i].dataset.screenshotId);
       const img = $shots[i].querySelector('figure img').src.split('&')[0];
-      const video = $shots[i].querySelector('.video')?.dataset.videoTeaserXlarge;
+      const video = $shots[i].querySelector('.video')?.dataset
+        .videoTeaserXlarge;
       const url = $shots[i].querySelector('.dribbble-link').href;
       const likes = parseInt(
         $shots[i].querySelector('.js-shot-likes-count').innerText
       );
-      const comments = parseInt(
-        $shots[i].querySelector('.js-shot-comments-count').innerText
-      );
+      // NOTE: comments were removed at some point
+      const comments =
+        parseInt(
+          $shots[i].querySelector('.js-shot-comments-count')?.innerText
+        ) || 0;
+      // NOTE: views can be in format `99.9k`
+      const viewsString = $shots[i].querySelector('.js-shot-views-count')
+        ?.innerText;
       const title = $shots[i].querySelector('.shot-title').innerText;
 
       const authorName = $shots[i].querySelector(
@@ -54,6 +57,7 @@ module.exports = async function getTop() {
         url,
         likes,
         comments,
+        viewsString,
         title,
         author: {
           name: authorName,
