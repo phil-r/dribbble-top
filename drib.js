@@ -30,7 +30,7 @@ module.exports = async function getTop() {
     const results = [];
     const $shots = document.querySelectorAll('.shot-thumbnail');
     for (let i = 0; i < $shots.length; i++) {
-      const id = parseInt($shots[i].dataset.screenshotId);
+      const id = parseInt($shots[i].dataset.thumbnailId);
       const img = $shots[i].querySelector('figure img').src.split('&')[0];
       const video = $shots[i].querySelector('.video')?.dataset
         .videoTeaserXlarge;
