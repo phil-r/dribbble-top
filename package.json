@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -14,7 +15,7 @@
   },
   "dependencies": {
     "@polka/send-type": "^0.5.2",
-    "node-cache": "^5.1.2",
+    "mem": "^9.0.1",
     "polka": "^0.5.2",
     "puppeteer": "^13.0.1",
     "puppeteer-extra": "^3.2.3",

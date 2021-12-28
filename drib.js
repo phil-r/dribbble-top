@@ -1,19 +1,20 @@
 // puppeteer-extra is a drop-in replacement for puppeteer,
 // it augments the installed puppeteer with plugin functionality.
 // Any number of plugins can be added through `puppeteer.use()`
-const puppeteer = require('puppeteer-extra');
+import puppeteer from 'puppeteer-extra';
 
 // Add stealth plugin
-const pluginStealth = require('puppeteer-extra-plugin-stealth')();
+import pluginStealth from 'puppeteer-extra-plugin-stealth';
+const ps = pluginStealth();
 // Remove specific evasion from enabled ones dynamically due to https://github.com/berstend/puppeteer-extra/issues/467
-pluginStealth.enabledEvasions.delete('user-agent-override');
-puppeteer.use(pluginStealth);
+ps.enabledEvasions.delete('user-agent-override');
+puppeteer.use(ps);
 
 // Add adblocker plugin to block all ads and trackers (saves bandwidth)
-const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
+import AdblockerPlugin from 'puppeteer-extra-plugin-adblocker';
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
 
-module.exports = async function getTop() {
+export async function getTop() {
   const browser = await puppeteer.launch({
     // headless: false,
     // devtools: true,

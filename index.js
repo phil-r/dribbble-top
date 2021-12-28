@@ -1,29 +1,21 @@
-const polka = require('polka');
-const send = require('@polka/send-type');
-const NodeCache = require('node-cache');
+import polka from "polka";
+import send from "@polka/send-type";
+import mem from "mem";
 
-const cache = new NodeCache({ stdTTL: 600 });
-const getTop = require('./drib');
+import { getTop } from "./drib.js";
+
+const memTop = mem(getTop, { maxAge: 10 * 60 * 1000 });
 
 const port = process.env.PORT || 8080;
 
-const getCachedTop = async () => {
-  let top = cache.get('top');
-  if (!top) {
-    top = await getTop();
-    cache.set('top', top);
-  }
-  return top;
-};
-
 polka()
-  .get('/', (req, res) => {
-    return send(res, 200, 'hello!');
+  .get("/", (req, res) => {
+    return send(res, 200, "hello!");
   })
-  .get('/top', async (req, res) => {
+  .get("/top", async (req, res) => {
     try {
       return send(res, 200, {
-        top: await getCachedTop(),
+        top: await memTop(),
         ok: true,
       });
     } catch (error) {
