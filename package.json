@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test-script": "node test-script.js"
   },
   "author": "Phil Rukin <philipp@rukin.me> (https://rukin.me)",
   "license": "MIT",

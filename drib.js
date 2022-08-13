@@ -27,14 +27,31 @@ export async function getTop() {
     waitUntil: 'domcontentloaded',
   });
 
-  const shots = await page.evaluate(() => {
+  // dribbble lazily loads images that are in the view, so we need to scroll
+  await page.evaluate(()=>{
+    window.scrollBy(0, document.body.scrollHeight);
+  });
+
+  const shots = await page.evaluate(async () => {
     const results = [];
+    let fails = 0;
     const $shots = document.querySelectorAll('.shot-thumbnail');
     for (let i = 0; i < $shots.length; i++) {
+      $shots[i].scrollIntoView();
       const id = parseInt($shots[i].dataset.thumbnailId);
       const img = $shots[i].querySelector('figure img').src.split('&')[0];
+      if (img.startsWith('data:image/gif;base64')) {
+        if (fails > 10) {
+          fails = 0;
+          continue;
+        }
+        fails++;
+        i--;
+        await new Promise(r => setTimeout(r, 100));
+        continue;
+      }
       const video = $shots[i].querySelector('.video')?.dataset
-        .videoTeaserXlarge;
+        .videoTeaserLarge;
       const url = $shots[i].querySelector('.dribbble-link').href;
       const likes = parseInt(
         $shots[i].querySelector('.js-shot-likes-count').innerText
@@ -68,7 +85,7 @@ export async function getTop() {
         },
       });
     }
-    return Promise.resolve(results);
+    return results;
   });
   console.log(shots);
   await browser.close();
