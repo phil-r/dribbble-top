@@ -18,7 +18,7 @@
     "@polka/send-type": "^0.5.2",
     "mem": "^9.0.2",
     "polka": "^0.5.2",
-    "puppeteer": "^16.1.0",
+    "puppeteer": "^22.11.2",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-adblocker": "^2.13.5",
     "puppeteer-extra-plugin-stealth": "^2.11.1"
