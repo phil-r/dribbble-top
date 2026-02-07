@@ -5,22 +5,23 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test \"test/**/*.test.js\"",
     "start": "node index.js",
     "test-script": "node test-script.js"
   },
   "author": "Phil Rukin <philipp@rukin.me> (https://rukin.me)",
   "license": "MIT",
   "engines": {
-    "node": "^16.13.0"
+    "node": ">=22"
   },
   "dependencies": {
     "@polka/send-type": "^0.5.2",
+    "cheerio": "^1.1.2",
     "mem": "^9.0.2",
     "polka": "^0.5.2",
-    "puppeteer": "^16.1.0",
-    "puppeteer-extra": "^3.3.4",
-    "puppeteer-extra-plugin-adblocker": "^2.13.5",
-    "puppeteer-extra-plugin-stealth": "^2.11.1"
+    "puppeteer": "^24.37.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   }
 }
