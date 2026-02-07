@@ -88,7 +88,10 @@ async function extractShotsInBrowser(page) {
         img,
         video: node.querySelector(".video")?.dataset?.videoTeaserLarge || null,
         url: link?.href || null,
-        likes: readText(node.querySelector(".js-shot-likes-count")),
+        likes: readText(
+          node.querySelector("[data-shot-like-count]") ||
+            node.querySelector(".js-shot-likes-count")
+        ),
         comments: readText(node.querySelector(".js-shot-comments-count")),
         viewsString: readText(node.querySelector(".js-shot-views-count")),
         title: readText(node.querySelector(".shot-title")),
@@ -130,7 +133,9 @@ async function extractShotsFromHtml() {
       img: img ? img.split("&")[0] : null,
       video: shot.find(".video").attr("data-video-teaser-large") || null,
       url: shot.find(".dribbble-link").attr("href") || null,
-      likes: shot.find(".js-shot-likes-count").text().trim(),
+      likes:
+        shot.find("[data-shot-like-count]").first().text().trim() ||
+        shot.find(".js-shot-likes-count").first().text().trim(),
       comments: shot.find(".js-shot-comments-count").text().trim(),
       viewsString: shot.find(".js-shot-views-count").text().trim(),
       title: shot.find(".shot-title").text().trim(),
