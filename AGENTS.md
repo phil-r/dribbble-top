@@ -1,55 +1,52 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repo is a Node.js API that returns top Dribbble shots.
+This repo is a Bun + TypeScript API that returns top Dribbble shots.
 
-- `index.js`: Polka server and HTTP routes (`/`, `/top`).
-- `drib.js`: scraping pipeline (Puppeteer first, HTTP+Cheerio fallback) and shot normalization.
-- `test/drib.test.js`: unit tests for normalization contract.
-- `test-script.js`: manual scraper smoke runner.
-- `package.json`: scripts, Node runtime policy, and dependencies.
+- `src/server.ts`: `Bun.serve` entrypoint and route handling (`/`, `/top`).
+- `src/scraper/`: browser scraper, HTTP fallback, and normalization logic.
+- `src/cache.ts`: typed TTL cache used by `/top`.
+- `src/config.ts`: environment parsing and runtime defaults.
+- `src/types.ts`: shared API and scraper types.
+- `test/`: Bun tests (`*.test.ts`) for normalization, cache, and routes.
 
-Keep route logic thin. Put scraping and parsing behavior in `drib.js`-style modules.
+Keep route logic thin and place scraping/parsing logic in `src/scraper/`.
 
 ## Build, Test, and Development Commands
-- `npm install`: install/update dependencies.
-- `npm start`: run API locally (default `PORT=8080`).
-- `npm test`: run unit tests (`node --test "test/**/*.test.js"`).
-- `npm run test-script`: run a manual live scrape check.
-- `npm audit --omit=dev`: check production dependency vulnerabilities.
+- `bun install`: install dependencies and lockfile.
+- `bun run dev`: run server with watch mode.
+- `bun run start`: run server normally.
+- `bun test`: run the test suite.
+- `bun run typecheck`: strict TypeScript checks (`tsc --noEmit`).
+- `bun run audit`: dependency vulnerability scan.
+- `bun run test-script`: manual live scraper smoke check.
 
 Example:
 
 ```bash
-PORT=8080 npm start
+PORT=8080 bun run start
 curl http://localhost:8080/top
 ```
 
 ## Coding Style & Naming Conventions
-- Use ES modules only (`import`/`export`).
-- Follow existing style: 2-space indentation, semicolons, camelCase identifiers.
-- Use lowercase file names (for example, `drib.js`).
-- Preserve API response keys in normalizers: `id`, `img`, `video`, `url`, `likes`, `comments`, `viewsString`, `title`, `author`.
-
-No formatter/linter is configured; keep style consistent with surrounding code.
+- Use strict TypeScript with explicit types; avoid `any`.
+- Use ES modules and 2-space indentation.
+- Prefer small, composable modules (`normalize`, `browser`, `fallback`).
+- Preserve response keys for `Shot`: `id`, `img`, `video`, `url`, `likes`, `comments`, `viewsString`, `title`, `author`.
 
 ## Testing Guidelines
-- Add tests under `test/` with `*.test.js` names.
-- Prioritize contract tests for payload shape and parser defaults.
-- After scraper changes, run both:
-  - `npm test` (fast regression)
-  - `npm run test-script` (live scrape behavior)
+- Place tests in `test/` and name files `*.test.ts`.
+- Use `bun:test` APIs (`describe`, `test`, `expect`).
+- Cover parser/normalizer contract behavior and route responses.
+- For scraper changes, run both `bun test` and `bun run test-script`.
 
 ## Commit & Pull Request Guidelines
-Prefer short imperative commit subjects (for example, `Fix scraper fallback`, `Update deps`).
+Use concise, imperative commit subjects (for example, `Migrate server to Bun.serve`).
 
-- Keep each commit focused on one logical change.
-- PRs should include: intent, behavior changes, verification commands run, and relevant sample output for `/top`.
+- Keep commits focused on one logical change.
+- PRs should include intent, changed behavior, and verification commands run.
+- For `/top` changes, include a response example.
 
 ## Runtime & Environment Notes
-- Supported runtime: Node `>=22`.
-- Optional env vars:
-  - `PORT`: HTTP port.
-  - `PUPPETEER_EXECUTABLE_PATH`: custom Chromium/Chrome binary.
-  - `PUPPETEER_DISABLE_SANDBOX=1`: disable Chromium sandbox when required by host.
-  - `PUPPETEER_HEADLESS=false`: run non-headless for local debugging.
+- Runtime: Bun `>=1.3.5`.
+- Optional env vars: `PORT`, `PUPPETEER_EXECUTABLE_PATH`, `PUPPETEER_DISABLE_SANDBOX`, `PUPPETEER_HEADLESS`.
