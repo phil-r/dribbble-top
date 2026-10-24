@@ -20,11 +20,11 @@ async function extractShotsFromHtml(): Promise<RawShot[]> {
 
   $(".shot-thumbnail").each((_, shotElement) => {
     const shot = $(shotElement);
-    const img =
-      shot.find("figure img").attr("src") ||
-      shot.find("figure img").attr("data-src") ||
-      shot.find("figure img").attr("srcset")?.split(" ")[0] ||
-      null;
+    const imgEl = shot.find("figure img");
+    const rawImg = ["src", "data-src", "srcset", "data-srcset"]
+      .map((name) => (imgEl.attr(name) || "").trim())
+      .find((value) => value && !/^data:/i.test(value)) || "";
+    const img = rawImg.split(" ")[0] || null;
 
     shots.push({
       id: shot.attr("data-thumbnail-id") ?? null,

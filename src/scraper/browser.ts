@@ -54,8 +54,9 @@ async function extractShotsInBrowser(page: Page): Promise<RawShot[]> {
 
     return nodes.map((node) => {
       const imgEl = node.querySelector("figure img");
-      const rawImg =
-        attr(imgEl, "src") || attr(imgEl, "data-src") || attr(imgEl, "srcset") || "";
+      const rawImg = ["src", "data-src", "srcset", "data-srcset"]
+        .map((name) => (attr(imgEl, name) || "").trim())
+        .find((value) => value && !/^data:/i.test(value)) || "";
       const firstPart = rawImg.split("&")[0] ?? "";
       const imgCandidate = firstPart.split(" ")[0] ?? "";
       const img = imgCandidate.length > 0 ? imgCandidate : null;
