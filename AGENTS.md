@@ -17,7 +17,7 @@ Keep route logic thin and place scraping/parsing logic in `src/scraper/`.
 - `bun run dev`: run server with watch mode.
 - `bun run start`: run server normally.
 - `bun test`: run the test suite.
-- `bun run typecheck`: strict TypeScript checks (`tsc --noEmit`).
+- `bun run typecheck`: strict TypeScript checks (`bun check`).
 - `bun run audit`: dependency vulnerability scan.
 - `bun run test-script`: manual live scraper smoke check.
 
@@ -48,5 +48,5 @@ Use concise, imperative commit subjects (for example, `Migrate server to Bun.ser
 - For `/top` changes, include a response example.
 
 ## Runtime & Environment Notes
-- Runtime: Bun `>=1.3.5`.
+- Runtime: Bun `>=1.4.4`.
 - Optional env vars: `PORT`, `PUPPETEER_EXECUTABLE_PATH`, `PUPPETEER_DISABLE_SANDBOX`, `PUPPETEER_HEADLESS`.

@@ -4,7 +4,7 @@ API for most popular Dribbble shots.
 
 ## Runtime
 
-- Bun `>=1.3.5`
+- Bun `>=1.4.4`
 
 ## Commands
 
@@ -12,7 +12,7 @@ API for most popular Dribbble shots.
 - `bun run dev`: start server in watch mode
 - `bun run start`: start server
 - `bun test`: run tests
-- `bun run typecheck`: run strict TypeScript checks
+- `bun run typecheck`: run strict TypeScript checks (`bun check`)
 - `bun run audit`: dependency security audit
 - `bun run test-script`: run scraper directly
 
